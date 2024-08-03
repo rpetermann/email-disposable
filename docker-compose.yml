@@ -5,7 +5,7 @@ services:
     image: hyperf-skeleton
     build:
       context: .
-      target: production
+      target: development
     volumes:
       - ./:/opt/www
     ports:
