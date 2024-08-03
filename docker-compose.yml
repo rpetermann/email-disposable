@@ -1,0 +1,19 @@
+version: '3'
+services:
+  email-disposable:
+    container_name: email-disposable
+    image: hyperf-skeleton
+    build:
+      context: .
+      target: production
+    volumes:
+      - ./:/opt/www
+    ports:
+      - 9501:9501
+    environment:
+      - APP_ENV=local
+      - SCAN_CACHEABLE=false
+
+networks:
+  default:
+    name: email-disposable
