@@ -6,13 +6,12 @@ use App\Enum\StatusCodeEnum;
 use Hyperf\ExceptionHandler\ExceptionHandler;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Psr\Http\Message\ResponseInterface;
-use Throwable;
 
 class AppExceptionHandler extends ExceptionHandler
 {
-    public function handle(Throwable $throwable, ResponseInterface $response)
+    public function handle(\Throwable $throwable, ResponseInterface $response): ResponseInterface
     {
-        $statusCode = $throwable->getCode() >= StatusCodeEnum::BAD_REQUEST->value 
+        $statusCode = $throwable->getCode() >= StatusCodeEnum::BAD_REQUEST->value
             ? $throwable->getCode()
             : StatusCodeEnum::INTERNAL_SERVER_ERROR->value;
         $data = json_encode([
@@ -26,7 +25,7 @@ class AppExceptionHandler extends ExceptionHandler
             ->withAddedHeader('Content-Type', 'applcation/json');
     }
 
-    public function isValid(Throwable $throwable): bool
+    public function isValid(\Throwable $throwable): bool
     {
         return true;
     }

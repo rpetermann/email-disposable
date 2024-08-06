@@ -12,7 +12,7 @@ class DebounceIOEmailDisposableProvider extends AbstractEmailDisposableProvider
     private const BASE_URI = 'https://disposable.debounce.io';
 
     public function __construct(
-        private ClientFactory $clientFactory,
+        private readonly ClientFactory $clientFactory,
     ) {
     }
 

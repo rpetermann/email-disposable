@@ -21,7 +21,7 @@ abstract class AbstractEmailDisposableProvider implements EmailDisposableProvide
         }
 
         return explode('@', $input->emailOrDomain)[1];
-    }    
+    }
 
     protected function getEmail(CheckEmailDisposableProviderInput $input): string
     {

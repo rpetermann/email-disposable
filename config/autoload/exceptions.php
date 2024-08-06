@@ -1,10 +1,13 @@
 <?php
 
+use App\Exception\Handler\AppExceptionHandler;
+use Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler;
+
 return [
     'handler' => [
         'http' => [
-            Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler::class,
-            App\Exception\Handler\AppExceptionHandler::class,
+            HttpExceptionHandler::class,
+            AppExceptionHandler::class,
         ],
     ],
 ];

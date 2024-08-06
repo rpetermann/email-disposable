@@ -21,16 +21,26 @@ class CheckEmailDisposableControllerTest extends AbstractFunctionalTestCase
 
     private ClientFactory|MockObject $clientFactory;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->clientFactory = $this->getMockBuilder(ClientFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->swap(ClientFactory::class, $this->clientFactory);
+    }
+
     public static function dataProviderShouldReturnErrorWhenPayloadIsInvalid(): \Generator
     {
         yield 'empty payload' => [
             [],
         ];
         yield 'missing evaluator' => [
-            ['emailOrDomain' => 'mock.com']
+            ['emailOrDomain' => 'mock.com'],
         ];
         yield 'missing emailOrDomain' => [
-            ['evaluator' => 'allOrNothing']
+            ['evaluator' => 'allOrNothing'],
         ];
     }
 
@@ -38,7 +48,7 @@ class CheckEmailDisposableControllerTest extends AbstractFunctionalTestCase
     public function testShouldReturnErrorWhenPayloadIsInvalid(array $options): void
     {
         $response = $this->client->request('GET', self::URL, $options);
-        $responseJson = json_decode($response->getBody()->getContents(), true);
+        $responseJson = json_decode((string) $response->getBody()->getContents(), true);
 
         $this->assertSame(422, $response->getStatusCode());
         $this->assertEqualsCanonicalizing([
@@ -56,7 +66,7 @@ class CheckEmailDisposableControllerTest extends AbstractFunctionalTestCase
             ],
         ];
         $response = $this->client->request('GET', self::URL, $options);
-        $responseJson = json_decode($response->getBody()->getContents(), true);
+        $responseJson = json_decode((string) $response->getBody()->getContents(), true);
 
         $this->assertSame(422, $response->getStatusCode());
         $this->assertEqualsCanonicalizing([
@@ -83,7 +93,7 @@ class CheckEmailDisposableControllerTest extends AbstractFunctionalTestCase
             ],
         ];
         $response = $this->client->request('GET', self::URL, $options);
-        $responseJson = json_decode($response->getBody()->getContents(), true);
+        $responseJson = json_decode((string) $response->getBody()->getContents(), true);
 
         $this->assertSame(500, $response->getStatusCode());
         $this->assertEqualsCanonicalizing([
@@ -120,7 +130,7 @@ class CheckEmailDisposableControllerTest extends AbstractFunctionalTestCase
             ],
         ];
         $response = $this->client->request('GET', self::URL, $options);
-        $responseJson = json_decode($response->getBody()->getContents(), true);
+        $responseJson = json_decode((string) $response->getBody()->getContents(), true);
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertEqualsCanonicalizing([
@@ -131,15 +141,5 @@ class CheckEmailDisposableControllerTest extends AbstractFunctionalTestCase
                 ['provider' => 'disify', 'disposable' => true],
             ],
         ], $responseJson);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->clientFactory = $this->getMockBuilder(ClientFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->swap(ClientFactory::class, $this->clientFactory);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\UseCase\CheckEmailDisposable\Dto;
 
-class CheckEmailDisposableOutput implements \JsonSerializable
+use Hyperf\Contract\Jsonable;
+
+class CheckEmailDisposableOutput implements Jsonable
 {
     public function __construct(
         public readonly string $emailOrDomain,
@@ -11,12 +13,12 @@ class CheckEmailDisposableOutput implements \JsonSerializable
     ) {
     }
 
-    public function jsonSerialize(): mixed
+    public function __toString(): string
     {
-        return [
+        return (string) json_encode([
             'emailOrDomain' => $this->emailOrDomain,
             'disposable' => $this->disposable,
-            'outputs' => $this->outputs?->outputs,
-        ];
+            'outputs' => $this->outputs->outputs,
+        ]);
     }
 }

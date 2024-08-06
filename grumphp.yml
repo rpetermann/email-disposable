@@ -1,0 +1,36 @@
+grumphp:
+    tasks:
+        phpcsfixer:
+            config: .php-cs-fixer.php
+            config_contains_finder: true
+            verbose: false
+            diff: true
+        phpstan:
+            configuration: phpstan.neon.dist
+            memory_limit: "-1"
+        shell:
+            scripts:
+                - ["-c", "./vendor/bin/rector --dry-run"]
+        git_blacklist:
+            keywords:
+                - "die\\("
+                - "var_dump\\("
+                - "dd\\("
+            whitelist_patterns:
+                - "tests/cover"
+            regexp_type: G
+            match_word: false
+    testsuites:
+        git_pre_commit:
+            tasks:
+                - phpcsfixer
+                - phpstan
+                - shell
+                - git_blacklist
+    ignore_unstaged_changes: false
+    fixer:
+        enabled: false
+        fix_by_default: false
+    ascii:
+        failed: ~
+        succeeded: ~

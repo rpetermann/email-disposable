@@ -13,7 +13,7 @@ class AllOrNothingEvaluator implements EvaluatorInterface
             if (!$output instanceof CheckEmailDisposableProviderOutput) {
                 continue;
             }
-            if (false === $output->disposable) {
+            if ($output->disposable === false) {
                 return false;
             }
         }

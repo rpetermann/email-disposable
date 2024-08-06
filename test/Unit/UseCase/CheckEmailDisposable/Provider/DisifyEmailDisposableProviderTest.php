@@ -9,8 +9,8 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Hyperf\Guzzle\ClientFactory;
-use HyperfTest\Unit\AbstractUnitTestCase;
 use HyperfTest\Trait\GuzzleClientMockTrait;
+use HyperfTest\Unit\AbstractUnitTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -21,7 +21,23 @@ class DisifyEmailDisposableProviderTest extends AbstractUnitTestCase
     use GuzzleClientMockTrait;
 
     private ClientFactory|MockObject $clientFactory;
+
     private DisifyEmailDisposableProvider $disifyEmailDisposableProvider;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->clientFactory = $this->getMockBuilder(ClientFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->disifyEmailDisposableProvider = make(
+            DisifyEmailDisposableProvider::class,
+            [
+                $this->clientFactory,
+            ],
+        );
+    }
 
     public function testIsDisposableShouldReturnNullWhenRequestFails(): void
     {
@@ -140,20 +156,5 @@ class DisifyEmailDisposableProviderTest extends AbstractUnitTestCase
         $this->assertInstanceOf(CheckEmailDisposableProviderOutput::class, $response);
         $this->assertSame($expectedResponse, $response->disposable);
         $this->assertSame('disify', $response->provider);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->clientFactory = $this->getMockBuilder(ClientFactory::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $this->disifyEmailDisposableProvider = make(
-            DisifyEmailDisposableProvider::class,
-            [
-                $this->clientFactory,
-            ],
-        );
     }
 }

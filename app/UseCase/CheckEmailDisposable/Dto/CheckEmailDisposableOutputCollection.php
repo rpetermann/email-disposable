@@ -20,9 +20,7 @@ class CheckEmailDisposableOutputCollection implements \IteratorAggregate
     public function hasOutput(): bool
     {
         return !empty(
-            array_filter($this->outputs, function (CheckEmailDisposableProviderOutput $output) {
-                return is_bool($output->disposable);
-            })
+            array_filter($this->outputs, fn (CheckEmailDisposableProviderOutput $output) => is_bool($output->disposable))
         );
     }
 

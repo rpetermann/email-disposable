@@ -1,5 +1,5 @@
 parameters:
-  level: 0
+  level: 5
   paths:
     - ./app
     - ./config
@@ -7,3 +7,5 @@ parameters:
   ignoreErrors:
     - '#Static call to instance method Hyperf\\HttpServer\\Router\\Router::[a-zA-Z0-9\\_]+\(\)#'
     - '#Static call to instance method Hyperf\\DbConnection\\Db::[a-zA-Z0-9\\_]+\(\)#'
+    - '#Constant BASE_PATH not found.#'
+    - '#Access to constant \S+ on an unknown class Swoole\\Constant.#'

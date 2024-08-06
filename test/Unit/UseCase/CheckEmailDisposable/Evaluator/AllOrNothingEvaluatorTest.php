@@ -11,13 +11,20 @@ class AllOrNothingEvaluatorTest extends AbstractUnitTestCase
 {
     private AllOrNothingEvaluator $allOrNothingEvaluator;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->allOrNothingEvaluator = $this->getContainer()->get(AllOrNothingEvaluator::class);
+    }
+
     public function testEvaluateShouldReturnTrueWhenOneOutputIsNull(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             null,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             true,
         );
@@ -33,11 +40,11 @@ class AllOrNothingEvaluatorTest extends AbstractUnitTestCase
 
     public function testEvaluateShouldReturnFalseWhenOneOutputIsFalse(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             false,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             true,
         );
@@ -53,11 +60,11 @@ class AllOrNothingEvaluatorTest extends AbstractUnitTestCase
 
     public function testEvaluateShouldReturnFalseWhenHasFalseAndNullOutputs(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             false,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             null,
         );
@@ -73,11 +80,11 @@ class AllOrNothingEvaluatorTest extends AbstractUnitTestCase
 
     public function testEvaluateShouldReturnTrueWhenOneAllOutputsAreTrue(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             true,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             true,
         );
@@ -89,12 +96,5 @@ class AllOrNothingEvaluatorTest extends AbstractUnitTestCase
         $response = $this->allOrNothingEvaluator->evaluate($outputs);
 
         $this->assertTrue($response);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->allOrNothingEvaluator = $this->getContainer()->get(AllOrNothingEvaluator::class);
     }
 }

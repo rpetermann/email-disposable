@@ -11,9 +11,9 @@ use App\UseCase\CheckEmailDisposable\Evaluator\EvaluatorInterface;
 use App\UseCase\CheckEmailDisposable\Exception\InvalidEvaluatorException;
 use App\UseCase\CheckEmailDisposable\Exception\InvalidEvaluatorInterfaceException;
 use App\UseCase\CheckEmailDisposable\Exception\RequestsFailedException;
-use App\UseCase\CheckEmailDisposable\Provider\Dto\CheckEmailDisposableProviderInput;
 use App\UseCase\CheckEmailDisposable\Provider\DebounceIOEmailDisposableProvider;
 use App\UseCase\CheckEmailDisposable\Provider\DisifyEmailDisposableProvider;
+use App\UseCase\CheckEmailDisposable\Provider\Dto\CheckEmailDisposableProviderInput;
 use App\UseCase\CheckEmailDisposable\Provider\EmailDisposableProviderInterface;
 use Hyperf\Coroutine\Parallel;
 
@@ -45,7 +45,7 @@ class CheckEmailDisposableStrategy
     private function validate(CheckEmailDisposableInput $input): void
     {
         $evaluator = self::EVALUATORS[$input->evaluator] ?? null;
-        if (null === $evaluator) {
+        if ($evaluator === null) {
             throw new InvalidEvaluatorException();
         }
         if (!is_a($evaluator, EvaluatorInterface::class, true)) {
@@ -62,9 +62,7 @@ class CheckEmailDisposableStrategy
             if ($instance === null) {
                 continue;
             }
-            $parallel->add(function () use ($instance, $providerInput) {
-                return $instance->isDisposable($providerInput);
-            });
+            $parallel->add(fn () => $instance->isDisposable($providerInput));
         }
         $outputs = new CheckEmailDisposableOutputCollection(
             outputs: $parallel->wait(),

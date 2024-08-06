@@ -11,13 +11,20 @@ class AtLeastOneEvaluatorTest extends AbstractUnitTestCase
 {
     private AtLeastOneEvaluator $atLeastOneEvaluator;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->atLeastOneEvaluator = $this->getContainer()->get(AtLeastOneEvaluator::class);
+    }
+
     public function testEvaluateShouldReturnTrueWhenOneOutputIsNull(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             null,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             true,
         );
@@ -33,11 +40,11 @@ class AtLeastOneEvaluatorTest extends AbstractUnitTestCase
 
     public function testEvaluateShouldReturnTrueWhenAtLeastOutputIsTrue(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             false,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             true,
         );
@@ -53,11 +60,11 @@ class AtLeastOneEvaluatorTest extends AbstractUnitTestCase
 
     public function testEvaluateShouldReturnFalseWhenHasFalseAndNullOutputs(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             false,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             null,
         );
@@ -73,11 +80,11 @@ class AtLeastOneEvaluatorTest extends AbstractUnitTestCase
 
     public function testEvaluateShouldReturnTrueWhenOneAllOutputsAreTrue(): void
     {
-        $output1 = new  CheckEmailDisposableProviderOutput(
+        $output1 = new CheckEmailDisposableProviderOutput(
             'mock provider 1',
             true,
         );
-        $output2 = new  CheckEmailDisposableProviderOutput(
+        $output2 = new CheckEmailDisposableProviderOutput(
             'mock provider 2',
             true,
         );
@@ -89,12 +96,5 @@ class AtLeastOneEvaluatorTest extends AbstractUnitTestCase
         $response = $this->atLeastOneEvaluator->evaluate($outputs);
 
         $this->assertTrue($response);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->atLeastOneEvaluator = $this->getContainer()->get(AtLeastOneEvaluator::class);
     }
 }

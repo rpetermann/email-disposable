@@ -12,7 +12,7 @@ class DisifyEmailDisposableProvider extends AbstractEmailDisposableProvider
     private const BASE_URI = 'https://disify.com';
 
     public function __construct(
-        private ClientFactory $clientFactory,
+        private readonly ClientFactory $clientFactory,
     ) {
     }
 

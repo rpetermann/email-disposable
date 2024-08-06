@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 
 trait GuzzleClientMockTrait
 {
-    public function getClient(ResponseInterface|RequestExceptionInterface ...$responses): Client
+    public function getClient(RequestExceptionInterface|ResponseInterface ...$responses): Client
     {
         $mockResponse = new MockHandler($responses);
         $handlerStack = HandlerStack::create($mockResponse);
