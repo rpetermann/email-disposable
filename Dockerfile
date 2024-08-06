@@ -11,6 +11,15 @@ RUN set -ex \
     && php -m \
     && php --ri swoole \
     && cd /etc/php* \
+    # - extensions
+    && apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+        php-xdebug \
+    # - config XDebug
+    && { \
+        echo "zend_extension=xdebug.so"; \
+        echo "xdebug.mode=coverage"; \
+    } | tee conf.d/50_xdebug.ini \
     # - config PHP
     && { \
         echo "upload_max_filesize=128M"; \

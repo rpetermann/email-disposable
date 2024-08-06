@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" backupGlobals="false" bootstrap="./test/bootstrap.php" colors="true" processIsolation="false" stopOnFailure="false" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false">
+  <coverage>
+    <report>
+      <html outputDirectory="test/cover/"/>
+    </report>
+  </coverage>
   <testsuites>
     <testsuite name="Unit Test Suite">
-        <directory suffix="Test.php">test/Unit</directory>
+      <directory suffix="Test.php">test/Unit</directory>
     </testsuite>
     <testsuite name="Functional Test Suite">
-        <directory suffix="Test.php">test/Functional</directory>
+      <directory suffix="Test.php">test/Functional</directory>
     </testsuite>
-</testsuites>
-
+  </testsuites>
   <php>
     <env name="APP_ENV" value="test" force="true"/>
   </php>
+  <logging/>
   <source>
     <include>
       <directory suffix=".php">./app</directory>
