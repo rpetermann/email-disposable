@@ -20,19 +20,25 @@ Disposable email addresses are temporary email addresses that expire after a cer
 ## Installation
 To install and set up the project using Docker, follow these steps:
 
-1. **Clone the repository**:
+1. **Install Docker**:
+    Follow the official Docker installation guide for your operating system: [Install Docker](https://docs.docker.com/get-docker/)
+
+2. **Install Docker Compose**:
+    Follow the official Docker Compose installation guide: [Install Docker Compose](https://docs.docker.com/compose/install/)
+
+3. **Clone the repository**:
     ```sh
     git clone https://github.com/yourusername/disposable-email-checker.git
     cd disposable-email-checker
     ```
 
-2. **Set up environment variables**:
+4. **Set up environment variables**:
     Copy the `.env.example` file to `.env` and configure your environment variables.
     ```sh
     cp .env.example .env
     ```
 
-3. **Build and Run using Docker**:
+5. **Build and Run using Docker**:
     ```sh
     docker-compose up --build
     ```
